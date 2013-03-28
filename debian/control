@@ -2,7 +2,7 @@ Source: puppetquery
 Section: admin
 Priority: extra
 Maintainer: Ingo Oeser <nightlyone@googlemail.com>
-Build-Depends: debhelper (>= 8.0.0), golang-go, git-core, mercurial
+Build-Depends: debhelper (>= 8.0.0), golang-go, git-core, mercurial, rsync
 Standards-Version: 3.9.2
 Homepage: https://github.com/nightlyone/puppetquery
 Vcs-Git: git://github.com/nightlyone/puppetquery.git
