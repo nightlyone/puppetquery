@@ -27,7 +27,7 @@ func BinOp(binop string, left, right QueryString) QueryString {
 	case len(right) == 0:
 		return left
 	case len(left) > 2 && hasOp(binop, left):
-		return append(right, left)
+		return append(left, right)
 	case len(right) > 2 && hasOp(binop, right):
 		return append(right, left)
 	}

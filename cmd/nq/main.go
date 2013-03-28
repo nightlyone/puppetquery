@@ -10,17 +10,19 @@ import (
 
 func ParseEqualFact(arg string) puppetquery.QueryString {
 	f := strings.SplitN(arg, "=", 2)
+	if len(f) != 2 {
+		log.Fatalln("ERROR: invalid argument: ", arg)
+	}
 	fact, value := f[0], f[1]
 	return puppetquery.FactCompare(fact, "=", value)
 }
 
 func main() {
 	flag.Parse()
-	q := puppetquery.QueryString{}
+	q := puppetquery.ActiveNodes()
 	for i := 0; i < flag.NArg(); i++ {
 		q = puppetquery.And(q, ParseEqualFact(flag.Arg(i)))
 	}
-	log.Println("DEBUG: query: ", q.ToJson())
 	n, err := puppetquery.QueryNodes(q)
 	if err != nil {
 		log.Fatalln("ERROR: cannot query puppetdb: ", err)

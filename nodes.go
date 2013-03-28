@@ -8,14 +8,14 @@ import (
 )
 
 func QueryNodes(query QueryString) (nodes []string, err error) {
-	query_string := "query=" + query.ToJson()
-	req, err := http.NewRequest("GET", endpoint+"/nodes"+"?"+url.QueryEscape(query_string), nil)
+	req, err := http.NewRequest("GET", endpoint+"/nodes"+"?query="+url.QueryEscape(query.ToJson()), nil)
 	req.Header.Add("Accept", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	if resp.StatusCode != 200 {
+		log.Print("FATAL: query ", query)
 		log.Print("FATAL: request ", resp.Request)
 		log.Fatal("FATAL: Status != 200, got ", resp.Status)
 	}
