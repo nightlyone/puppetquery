@@ -12,12 +12,26 @@ func ActiveNodes() QueryString {
 	return QueryString{Any("="), QueryString{Any("node"), Any("active")}, Any(true)}
 }
 
+func BinOp(binop string, left, right QueryString) QueryString {
+	if len(left) > 2 {
+		if op, ok := left[0].(string); ok && op == binop {
+			return append(left, right)
+		}
+	}
+	if len(right) > 2 {
+		if op, ok := right[0].(string); ok && op == binop {
+			return append(right, left)
+		}
+	}
+	return QueryString{Any(binop), left, right}
+}
+
 func And(left, right QueryString) QueryString {
-	return QueryString{Any("and"), left, right}
+	return BinOp("and", left, right)
 }
 
 func Or(left, right QueryString) QueryString {
-	return QueryString{Any("or"), left, right}
+	return BinOp("or", left, right)
 }
 
 func FactCompare(name, op string, value Any) QueryString {
