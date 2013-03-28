@@ -5,11 +5,11 @@ import (
 	"log"
 )
 
-type Any interface{}
-type QueryString []Any
+type any interface{}
+type QueryString []any
 
 func ActiveNodes() QueryString {
-	return QueryString{Any("="), QueryString{Any("node"), Any("active")}, Any(true)}
+	return QueryString{any("="), QueryString{any("node"), any("active")}, any(true)}
 }
 
 func hasOp(op string, tree QueryString) bool {
@@ -31,7 +31,7 @@ func BinOp(binop string, left, right QueryString) QueryString {
 	case len(right) > 2 && hasOp(binop, right):
 		return append(right, left)
 	}
-	return QueryString{Any(binop), left, right}
+	return QueryString{any(binop), left, right}
 }
 
 func And(left, right QueryString) QueryString {
@@ -49,11 +49,11 @@ func Not(tree QueryString) QueryString {
 	case len(tree) == 2 && hasOp("not", tree):
 		return tree[1].(QueryString)
 	}
-	return QueryString{Any("not"), tree}
+	return QueryString{any("not"), tree}
 }
 
-func FactCompare(name, op string, value Any) QueryString {
-	return QueryString{op, QueryString{Any("fact"), Any(name)}, value}
+func FactCompare(name, op string, value any) QueryString {
+	return QueryString{op, QueryString{any("fact"), any(name)}, value}
 }
 
 func (q *QueryString) ToJson() string {
