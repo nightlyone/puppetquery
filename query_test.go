@@ -40,6 +40,14 @@ var opTests = []struct {
 		in:   Or(FactCompare("kernel", "=", "Linux"), FactCompare("uptime_days", ">", 30)),
 		want: `["or",["=",["fact","kernel"],"Linux"],["\u003e",["fact","uptime_days"],30]]`,
 	},
+	{
+		in:   Not(FactCompare("kernel", "=", "Linux")),
+		want: `["not",["=",["fact","kernel"],"Linux"]]`,
+	},
+	{
+		in:   Not(Not(And(FactCompare("kernel", "=", "Linux"), FactCompare("uptime_days", ">", 30)))),
+		want: `["and",["=",["fact","kernel"],"Linux"],["\u003e",["fact","uptime_days"],30]]`,
+	},
 }
 
 func TestOps(t *testing.T) {

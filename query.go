@@ -12,16 +12,24 @@ func ActiveNodes() QueryString {
 	return QueryString{Any("="), QueryString{Any("node"), Any("active")}, Any(true)}
 }
 
-func BinOp(binop string, left, right QueryString) QueryString {
-	if len(left) > 2 {
-		if op, ok := left[0].(string); ok && op == binop {
-			return append(left, right)
-		}
+func hasOp(op string, tree QueryString) bool {
+	if len(tree) > 0 {
+		o, ok := tree[0].(string)
+		return ok && o == op
 	}
-	if len(right) > 2 {
-		if op, ok := right[0].(string); ok && op == binop {
-			return append(right, left)
-		}
+	return false
+}
+
+func BinOp(binop string, left, right QueryString) QueryString {
+	switch {
+	case len(left) == 0:
+		return right
+	case len(right) == 0:
+		return left
+	case len(left) > 2 && hasOp(binop, left):
+		return append(right, left)
+	case len(right) > 2 && hasOp(binop, right):
+		return append(right, left)
 	}
 	return QueryString{Any(binop), left, right}
 }
@@ -32,6 +40,16 @@ func And(left, right QueryString) QueryString {
 
 func Or(left, right QueryString) QueryString {
 	return BinOp("or", left, right)
+}
+
+func Not(tree QueryString) QueryString {
+	switch {
+	case len(tree) == 0:
+		return tree
+	case len(tree) == 2 && hasOp("not", tree):
+		return tree[1].(QueryString)
+	}
+	return QueryString{Any("not"), tree}
 }
 
 func FactCompare(name, op string, value Any) QueryString {
