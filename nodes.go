@@ -2,14 +2,14 @@ package puppetquery
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"net/url"
-	"log"
 )
 
 func QueryNodes(query QueryString) (nodes []string, err error) {
 	query_string := "query=" + query.ToJson()
-	req, err := http.NewRequest("GET", endpoint + "/nodes" + "?" + url.QueryEscape(query_string), nil)
+	req, err := http.NewRequest("GET", endpoint+"/nodes"+"?"+url.QueryEscape(query_string), nil)
 	req.Header.Add("Accept", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {

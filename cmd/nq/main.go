@@ -1,10 +1,10 @@
 package main
 
 import (
-	"log"
 	"flag"
-	"github.com/nightlyone/puppetquery"
 	"fmt"
+	"github.com/nightlyone/puppetquery"
+	"log"
 	"strings"
 )
 
