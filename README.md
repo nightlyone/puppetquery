@@ -31,6 +31,11 @@ quick usage
 
 	nq -l=hostname
 
+
+* query values of fact1 and fact2 for hosts having fact3=foo and fact4= bar
+
+	nq -f=fact1,fact2 fact3=foo fact4=bar
+
 build and install
 =================
 
