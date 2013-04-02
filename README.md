@@ -68,12 +68,10 @@ List all active puppet nodes have 2 processors and running Debian
 
 LICENSE
 -------
-PROPRIETARY. Owned by Jimdo GmbH
+BSD
 
 documentation
 -------------
-
-
 
 contributing
 ============
