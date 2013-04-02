@@ -3,4 +3,3 @@ TODO
 * add more operators to the command line tool
 * add json and shell variable style output to enable usage in scripting
 * use real parser for more powerful operation modes
-* add more powerful client side filters to allow queries not supported by puppetdb itself

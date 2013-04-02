@@ -1,3 +1,10 @@
+puppetquery (0.2) unstable; urgency=low
+
+  * allow to query all facts of a given hostname
+  * allow query of and limit by values
+
+ -- Ingo Oeser <nightlyone@googlemail.com>  Tue, 02 Apr 2013 18:00:50 +0200
+
 puppetquery (0.1) unstable; urgency=low
 
   * Initial Release.
