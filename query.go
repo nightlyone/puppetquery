@@ -5,9 +5,13 @@ import (
 	"log"
 )
 
+//NOTE(nightlyone): any might be replaceable by string
 type any interface{}
+
+//internal format to manage and massage Query
 type QueryString []any
 
+// Returns a query for active nodes only
 func ActiveNodes() QueryString {
 	return QueryString{any("="), QueryString{any("node"), any("active")}, any(true)}
 }
@@ -20,6 +24,8 @@ func hasOp(op string, tree QueryString) bool {
 	return false
 }
 
+//returns Query <left> <binop> <right> and reduces left or right, if it contains binop already
+// e.g. (a and b) and c becomes and(a,b,c)
 func BinOp(binop string, left, right QueryString) QueryString {
 	switch {
 	case len(left) == 0:
@@ -34,14 +40,17 @@ func BinOp(binop string, left, right QueryString) QueryString {
 	return QueryString{any(binop), left, right}
 }
 
+// constructs and(left, right) from left and right
 func And(left, right QueryString) QueryString {
 	return BinOp("and", left, right)
 }
 
+// constructs or(left, right) from left and right
 func Or(left, right QueryString) QueryString {
 	return BinOp("or", left, right)
 }
 
+//returns Query "not" <tree> <binop> <right> and reduces not(not(tree)) to tree again
 func Not(tree QueryString) QueryString {
 	switch {
 	case len(tree) == 0:
@@ -52,6 +61,7 @@ func Not(tree QueryString) QueryString {
 	return QueryString{any("not"), tree}
 }
 
+// returns a fact comparison query
 func FactCompare(name, op string, value any) QueryString {
 	return QueryString{op, QueryString{any("fact"), any(name)}, value}
 }

@@ -7,6 +7,7 @@ import (
 	"net/url"
 )
 
+// query node endpoint returning a list of nodes matching the query
 func QueryNodes(query QueryString) (nodes []string, err error) {
 	req, err := http.NewRequest("GET", endpoint+"/nodes"+"?query="+url.QueryEscape(query.ToJson()), nil)
 	req.Header.Add("Accept", "application/json")
