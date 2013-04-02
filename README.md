@@ -27,6 +27,10 @@ quick usage
 
 	nq fact1=foo fact2=bar
 
+* query all facts of a given hostname (nodename in puppet)
+
+	nq -l=hostname
+
 build and install
 =================
 
