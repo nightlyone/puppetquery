@@ -22,19 +22,22 @@ quick usage
 -----------
 * put URL to your puppetdb in `$HOME/.config/puppetquery/config.ini`
   with a line like `url=http://localhost:8080`
-* query all active puppet nodes by calling `nq` without parameters
-* query active puppet nodes having `fact1=foo` and `fact2=bar` (implicit and)
+* list names of all active puppet nodes by calling `nq` without parameters
+* list names of active puppet nodes having `fact1=foo` and `fact2=bar` (implicit and)
 
 	nq fact1=foo fact2=bar
 
-* query all facts of a given hostname (nodename in puppet)
+* list all facts of a given hostname (nodename in puppet)
 
-	nq -l=hostname
+	nq -l hostname
 
+* show values of fact1 and fact2 for hosts having fact3=foo and fact4= bar, if fact1 and fact2 are set for this host
 
-* query values of fact1 and fact2 for hosts having fact3=foo and fact4= bar
+	nq -f fact1,fact2 fact3=foo fact4=bar
 
-	nq -f=fact1,fact2 fact3=foo fact4=bar
+* show values of fact1 and fact2 for specific host, if they exist
+
+	nq -f fact1,fact2 fqdn=hostname.fully.qualified.domain.tld
 
 build and install
 =================
