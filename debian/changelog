@@ -1,3 +1,10 @@
+puppetquery (0.3) unstable; urgency=low
+
+  * Clearer docs, thanks to @fungusakafungus
+  * Control verbosity
+
+ -- Ingo Oeser <nightlyone@googlemail.com>  Mon, 15 Jul 2013 13:01:16 +0200
+
 puppetquery (0.2) unstable; urgency=low
 
   * allow to query all facts of a given hostname
