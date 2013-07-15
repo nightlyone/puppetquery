@@ -78,14 +78,16 @@ func factsOfNodesQuery(nodes []string, allowedFacts map[string]bool, nodeprefix 
 func main() {
 	var listFacts string
 	var limitFacts string
+	var verbose bool
 	flag.StringVar(&listFacts, "l", "", "list all facts of a node")
 	flag.StringVar(&limitFacts, "f", "", "limit display to comma separated list of facts")
+	flag.BoolVar(&verbose, "v", false, "more verbose output")
 	flag.Parse()
 
 	switch {
 	case len(listFacts) > 0:
 		res := factsOfNodesQuery([]string{listFacts}, nil, false)
-		if !res {
+		if !res && verbose {
 			log.Print("Query returned no results")
 		}
 	case len(limitFacts) > 0:
@@ -95,7 +97,7 @@ func main() {
 			allowedFacts[allow] = true
 		}
 		res := factsOfNodesQuery(simpleAndQuery(), allowedFacts, true)
-		if !res {
+		if !res && verbose {
 			log.Print("Query returned no results. Check your fact limits.")
 		}
 	default:
