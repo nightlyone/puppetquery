@@ -1,3 +1,10 @@
+puppetquery (0.4) unstable; urgency=low
+
+  * Increment version to rebuild package with newer Go release.
+  * Add a Bitdeli badge to README.
+
+ -- Mathias Lafeldt <mathias.lafeldt@gmail.com>  Tue, 12 Aug 2014 13:11:25 +0000
+
 puppetquery (0.3) unstable; urgency=low
 
   * Clearer docs, thanks to @fungusakafungus
