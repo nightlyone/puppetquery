@@ -11,6 +11,11 @@ type any interface{}
 //internal format to manage and massage Query
 type QueryString []any
 
+// Match returns a query matching for existance of certain (key,value) pairs
+func Match(key string, value interface{}) QueryString {
+	return QueryString{any("="), any(key), any(value)}
+}
+
 // Returns a query for active nodes only
 func ActiveNodes() QueryString {
 	return QueryString{any("="), QueryString{any("node"), any("active")}, any(true)}
