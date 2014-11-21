@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/nightlyone/puppetquery"
 	"log"
 	"sort"
 	"strings"
+
+	"github.com/nightlyone/puppetquery"
 )
 
 func ParseEqualFact(arg string) puppetquery.QueryString {
