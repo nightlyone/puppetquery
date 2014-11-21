@@ -1,26 +1,13 @@
 package puppetquery
 
-import (
-	"encoding/json"
-	"log"
-	"net/http"
-	"net/url"
-)
+import "encoding/json"
 
 // query node endpoint returning a list of nodes matching the query
 func QueryNodes(query QueryString) (nodes []string, err error) {
-	req, err := http.NewRequest("GET", endpoint+"/nodes"+"?query="+url.QueryEscape(query.ToJson()), nil)
-	req.Header.Add("Accept", "application/json")
-	resp, err := http.DefaultClient.Do(req)
+	b, err := do("nodes", query)
 	if err != nil {
 		return nil, err
 	}
-	if resp.StatusCode != 200 {
-		log.Print("FATAL: query ", query)
-		log.Print("FATAL: request ", resp.Request)
-		log.Fatal("FATAL: Status != 200, got ", resp.Status)
-	}
-	defer resp.Body.Close()
-	err = json.NewDecoder(resp.Body).Decode(&nodes)
+	err = json.Unmarshal(b, &nodes)
 	return nodes, err
 }
