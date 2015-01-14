@@ -11,7 +11,7 @@
 #export DH_OPTIONS=-v
 
 GO_PACKAGE=github.com/nightlyone/puppetquery
-BINARIES=nq
+BINARIES=nq puppet-naginator collect-resources
 GO_COMMANDS=$(addprefix $(GO_PACKAGE)/cmd/,$(BINARIES))
 
 export GOPATH=$(CURDIR)/debian/go_build
@@ -32,7 +32,7 @@ override_dh_auto_build:
 	go build $(GO_COMMANDS)
 
 override_dh_install:
-	dh_install --sourcedir=$(GOPATH)/bin nq $(DESTDIR)/usr/bin
+	dh_install --sourcedir=$(GOPATH)/bin $(BINARIES) $(DESTDIR)/usr/bin
 
 # These are not needed for go programs
 override_dh_pysupport override_dh_pysupport2 override_dh_perl:
