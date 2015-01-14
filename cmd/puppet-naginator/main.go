@@ -14,21 +14,20 @@ import (
 )
 
 func CollectNagiosResource(typ string, resp chan<- *bytes.Buffer, tags ...string) {
-	log.Println("INFO: Start query for", typ)
+	log.Print("INFO: Start PuppetDB query for resources of type nagios_", typ)
 	cr, err := puppetquery.CollectResources(nagiosPrefix+typ, tags...)
 	if err != nil {
-		log.Fatalln("ERROR: cannot query puppetdb: ", err)
+		log.Fatalln("ERROR: cannot query PuppetDB: ", err)
 	} else {
 		log.Printf("INFO: End query for %s (received %d resources)\n", typ, len(cr))
 	}
 	b := new(bytes.Buffer)
-	log.Print("INFO: generating resources for", typ)
 	err = generate(b, time.Now(), cr)
 	if err != nil {
-		log.Print("ERROR: generating resources for", typ)
+		log.Println("ERROR: generating resources for", typ)
 		resp <- nil
 	} else {
-		log.Print("INFO: done generating resources for", typ)
+		log.Printf("INFO: done generating %d %s definitions\n", len(cr), typ)
 		resp <- b
 	}
 }
@@ -38,7 +37,7 @@ var nagiosTypes = strings.Fields(`command contact contactgroup host hostdependen
 
 func main() {
 	var typ string
-	flag.StringVar(&typ, "t", "", "type of nagios resource")
+	flag.StringVar(&typ, "t", "", "type of nagios resource (the noun after 'define' in your nagios config)")
 	flag.Parse()
 	tags := flag.Args()
 	types := []string{typ}
@@ -64,8 +63,6 @@ func main() {
 		_, err := io.Copy(os.Stdout, b)
 		if err != nil {
 			log.Fatalln("ERROR: cannot display result: ", err)
-		} else {
-			log.Print("INFO: written file")
 		}
 	}
 }
