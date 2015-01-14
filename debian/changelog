@@ -1,3 +1,10 @@
+puppetquery (0.5) unstable; urgency=medium
+
+  * Add simple wrapper to collect resources as json
+  * Add small replacement for puppet-naginator
+
+ -- Ingo Oeser <ingo@jimdo.com>  Wed, 14 Jan 2015 15:14:32 +0100
+
 puppetquery (0.4) unstable; urgency=low
 
   * Increment version to rebuild package with newer Go release.
