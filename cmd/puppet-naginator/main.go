@@ -7,7 +7,6 @@ import (
 	"log"
 	"os"
 	"sort"
-	"strings"
 	"time"
 
 	"github.com/nightlyone/puppetquery"
@@ -31,9 +30,6 @@ func CollectNagiosResource(typ string, resp chan<- *bytes.Buffer, tags ...string
 		resp <- b
 	}
 }
-
-var nagiosTypes = strings.Fields(`command contact contactgroup host hostdependency hostescalation hostextinfo
-    hostgroup service servicedependency serviceescalation serviceextinfo servicegroup timeperiod`)
 
 func main() {
 	var typ string
