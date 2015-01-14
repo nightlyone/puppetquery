@@ -46,7 +46,7 @@ func main() {
 		log.Print("INFO: generating all resources in a single file")
 	} else {
 		sort.Strings(nagiosTypes)
-		if sort.SearchStrings(nagiosTypes, typ) < 0 {
+		if i := sort.SearchStrings(nagiosTypes, typ); i < 0 || nagiosTypes[i] != typ {
 			log.Fatalln("ERROR: invalid nagios type: ", typ)
 		}
 	}
