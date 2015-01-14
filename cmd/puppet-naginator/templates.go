@@ -11,6 +11,7 @@ import (
 )
 
 const nagiosPrefix = "Nagios_"
+const nagiosHostType = "Nagios_host"
 
 var keyOrder = slice2map([]string{"host_name", "alias", "use", "parents", "service_description"})
 var badparams = slice2map([]string{"notify", "target", "ensure", "require", "before", "tag"})
@@ -57,6 +58,9 @@ func generate(b *bytes.Buffer, dt time.Time, resources []puppetquery.Resource) e
 	for i, r := range resources {
 		if i != 0 {
 			b.WriteByte('\n')
+		}
+		if r.Type == nagiosHostType && r.Parameters["host_name"] == nil {
+			r.Parameters["host_name"] = r.Title
 		}
 		fmt.Fprintln(b, "define", strings.TrimPrefix(r.Type, nagiosPrefix), "{")
 		fmt.Fprintf(b, "\t## --PUPPET_NAME-- (called '_naginator_name' in the manifest)                %s\n", r.Title)
