@@ -14,7 +14,22 @@ const nagiosPrefix = "Nagios_"
 const nagiosHostType = "Nagios_host"
 
 var keyOrder = slice2map([]string{"host_name", "alias", "use", "parents", "service_description"})
-var badparams = slice2map([]string{"notify", "target", "ensure", "require", "before", "tag"})
+var badparams = slice2map(append(metaparams, "target", "ensure"))
+
+// https://docs.puppetlabs.com/references/latest/metaparameter.html
+var metaparams = []string{
+	// "alias", alias is needed in naginator although it is a metaparameter
+	"audit",
+	"before",
+	"loglevel",
+	"noop",
+	"notify",
+	"require",
+	"schedule",
+	"stage",
+	"subscribe",
+	"tag",
+}
 
 func slice2map(s []string) map[string]int {
 	m := make(map[string]int, len(s))
