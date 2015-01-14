@@ -1,3 +1,11 @@
+puppetquery (0.6) unstable; urgency=medium
+
+  * filter out all puppet metaparameters
+  * puppet namevar mechanism: derive fields from title, if they are missing
+  * filter out duplicate resources of same type and title
+
+ -- Ingo Oeser <ingo@jimdo.com>  Wed, 14 Jan 2015 21:21:34 +0100
+
 puppetquery (0.5) unstable; urgency=medium
 
   * Add simple wrapper to collect resources as json
