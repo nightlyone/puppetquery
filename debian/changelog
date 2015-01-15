@@ -1,3 +1,9 @@
+puppetquery (0.7) unstable; urgency=high
+
+  * Support "large" integers
+
+ -- Ingo Oeser <ingo@jimdo.com>  Thu, 15 Jan 2015 12:59:04 +0100
+
 puppetquery (0.6) unstable; urgency=medium
 
   * filter out all puppet metaparameters
