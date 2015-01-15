@@ -162,7 +162,16 @@ func generate(b *bytes.Buffer, dt time.Time, resources []puppetquery.Resource) e
 				continue
 			}
 			v := r.Parameters[k]
-			fmt.Fprintf(b, "\t%-30s %v\n", k, v)
+			// puppetdb stores "large" integers as float. So we simply format them as big integers,
+			// since for nagios they are uint64
+			switch v := v.(type) {
+			case float32:
+				fmt.Fprintf(b, "\t%-30s %.0f\n", k, v)
+			case float64:
+				fmt.Fprintf(b, "\t%-30s %.0f\n", k, v)
+			default:
+				fmt.Fprintf(b, "\t%-30s %v\n", k, v)
+			}
 		}
 		b.WriteString("}\n")
 	}
