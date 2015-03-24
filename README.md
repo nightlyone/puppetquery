@@ -15,7 +15,7 @@ BSD
 
 documentation
 -------------
-[package documentation at go.pkgdoc.org](http://go.pkgdoc.org/github.com/nightlyone/puppetquery)
+[package documentation at go.pkgdoc.org](http://godoc.org/github.com/nightlyone/puppetquery)
 
 
 quick usage
@@ -96,8 +96,3 @@ git commit hooks
 enable commit hooks via
 
         cd .git ; rm -rf hooks; ln -s ../git-hooks hooks ; cd ..
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/nightlyone/puppetquery/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
