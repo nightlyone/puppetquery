@@ -1,3 +1,13 @@
+// The puppet-naginator command collects nagios_XXXX resources and writes them to stdout.
+// Using the parameter -t TYPE only outputs nagios config defines of TYPE.
+// The TYPE is the noun you write after "define" in your nagios config.
+//
+// Example:
+// 	puppet-naginator -t host
+// Output:
+//	define host {
+//		host_name myhost.example.org
+//	}
 package main
 
 import (
