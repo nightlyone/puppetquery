@@ -1,10 +1,11 @@
 package puppetquery
 
 import (
-	"code.google.com/p/goconf/conf"
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/nightlyone/ini"
 )
 
 // Locations of site/global config and per user config.
@@ -17,38 +18,46 @@ var (
 var DefaultEndpoint = "http://localhost:8080"
 
 /// This part does the puppet endpoint autoconfiguration
-var config *conf.ConfigFile
-var endpoint string
+var config *ini.File
+var endpoint = DefaultEndpoint
 
 func init() {
 	config = loadConfig()
-	if puppetdb, err := config.GetString("default", "url"); err != nil {
-		endpoint = DefaultEndpoint
-	} else {
+	if puppetdb, ok := config.Global["url"]; ok {
 		endpoint = puppetdb
 	}
 }
 
-func loadConfig() *conf.ConfigFile {
-	c := conf.NewConfigFile()
-	global, err := os.Open(GlobalConfig)
-	if err == nil {
-		defer global.Close()
-		if err = c.Read(global); err != nil {
-			log.Println("ERROR: reading global config: ", err)
-			return c
-		}
-	}
-
-	home := os.Getenv("HOME")
-	user, err := os.Open(filepath.Join(home, UserConfig))
-	if err == nil {
-		defer user.Close()
-		if err = c.Read(user); err != nil {
+func loadConfig() *ini.File {
+	if home := os.Getenv("HOME"); home != "" {
+		c, err := tryLoadConfig(filepath.Join(home, UserConfig))
+		if err != nil {
 			log.Println("ERROR: reading per user config: ", err)
+			return new(ini.File)
+		}
+		if c != nil {
 			return c
 		}
 	}
+	c, err := tryLoadConfig(GlobalConfig)
+	if err != nil {
+		log.Println("ERROR: reading global config: ", err)
+		return new(ini.File)
+	}
+	if c != nil {
+		return c
+	}
+	return new(ini.File)
+}
 
-	return c
+func tryLoadConfig(filename string) (*ini.File, error) {
+	c, err := ini.ReadFile(filename)
+	switch {
+	case err == nil:
+		return c, nil
+	case os.IsNotExist(err):
+		return nil, nil
+	default:
+		return nil, err
+	}
 }
