@@ -86,12 +86,12 @@ func main() {
 	flag.Parse()
 
 	switch {
-	case len(listFacts) > 0:
+	case listFacts != "":
 		res := factsOfNodesQuery([]string{listFacts}, nil, false)
 		if !res && verbose {
 			log.Print("Query returned no results")
 		}
-	case len(limitFacts) > 0:
+	case limitFacts != "":
 		allowedFacts := map[string]bool{}
 
 		for _, allow := range strings.Split(limitFacts, ",") {
