@@ -1,17 +1,8 @@
 language: go
 go:
-  - 1.6
-  - 1.7
-  - tip
-
-# use cheap containers
-sudo: false
+  - "1.x"
 
 # Only test commits to production branch and all pull requests
 branches:
   only:
   - master
-
-matrix:
-  allow_failures:
-  - go: tip
